@@ -1,16 +1,19 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CurrencyPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
 export class CartComponent {
+  @Output() checkout = new EventEmitter<void>();
+  @Output() continueShopping = new EventEmitter<void>();
+  @Output() notify = new EventEmitter<string>();
   constructor(public cartService: CartService) {}
 
   removeFromCart(productId: number) {
