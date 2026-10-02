@@ -1,0 +1,47 @@
+<div class="products-section">
+  <h2>Products</h2>
+  
+  <div class="filters-container">
+    <div class="category-filter">
+      <label for="category-select">Category:</label>
+      <select 
+        id="category-select"
+        [(ngModel)]="selectedCategory"
+        (change)="filterByCategory()"
+        class="category-select"
+      >
+        @for (category of categories; track category) {
+          <option [value]="category">{{ category }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="search-bar">
+      <input 
+        type="text" 
+        placeholder="Search products..." 
+        [(ngModel)]="searchQuery"
+        (input)="filterProducts()"
+        class="search-input"
+      />
+    </div>
+  </div>
+  
+  <div class="products-grid">
+    @for (product of filteredProducts(); track product.id) {
+      <div class="product-card">
+        <img [src]="product.image" [alt]="product.name" class="product-image" />
+        <h3>{{ product.name }}</h3>
+        <p class="category-badge">{{ product.category }}</p>
+        <p class="price">${{ product.price.toFixed(2) }}</p>
+        <button (click)="addToCart(product)" class="btn-add-to-cart">
+          Add to Cart
+        </button>
+      </div>
+    }
+  </div>
+
+  @if (filteredProducts().length === 0) {
+    <p class="no-products">No products found</p>
+  }
+</div>
